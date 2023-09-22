@@ -1,0 +1,24 @@
+<div [formGroup]="answersFormArray">
+    <div formArrayName="answers">
+        <div *ngFor="let each of answers.controls;let i = index" class="questionArray">
+            <div class="eachQuestion">
+                <!-- <span>{{questionArray[i].question}}</span><span *ngIf="questionArray[i].isRequired"><b> *</b></span> -->
+                <span>{{each.get("question").value}}</span><span *ngIf="questionArray[i].isRequired"><b> *</b></span>
+            </div>
+            <div class="text-area">
+                <textarea [formControl]="getAsFormControl(each,'answer')" name="" id="" cols="30" rows="10"></textarea>
+            </div>
+            <div class="checkbox-area" *ngIf="!questionArray[i].typeOfAnswers">
+                <div *ngFor="let eachCheckBox of questionArray[i].checkBoxAnswers">
+                    <input type="checkbox" [formControl]="getAsFormControl(each,'checkBoxAnswersValue')"> <span>{{eachCheckBox}}</span>
+                </div>
+                <div *ngIf="questionArray[i].isAllow">
+                    <input type="text" placeholder="Write down other anwser here">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<button (click)="addQuestion()">Add Question</button>
+<button *ngIf="questionArray.length !== 0" (click)="reviewAnswers()">Review my answers ></button>

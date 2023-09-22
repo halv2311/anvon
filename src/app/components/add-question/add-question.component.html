@@ -1,0 +1,36 @@
+<span>Add a new questions</span>
+<form [formGroup]="questionForm">
+    <input formControlName="question" type="text" placeholder="Type question here">
+    <div class="options-list">
+        <div class="each-option" (click)="changeType(true)"
+            [ngClass]="{'active': questionForm.get('typeOfAnswers').value === true}">
+            <span>Paragraph</span>
+        </div>
+        <div class="each-option" (click)="changeType(false)"
+            [ngClass]="{'active': questionForm.get('typeOfAnswers').value === false}">
+            <span>Checkbox List V</span>
+        </div>
+    </div>
+    <div *ngIf="!isparagraph" class="checkbox-area">
+        <div formArrayName="checkBoxAnswers">
+            <div *ngFor="let each of checkBoxAnswers.controls, let i = index">
+                <span>{{i+1}}</span>
+                <input type="text" [formControlName]="i">
+                <button (click)="removeAnswer(i)">Remove answer</button>
+            </div>
+            <span (click)="addAnotherAnswer()">+ add another answer</span>
+        </div>
+
+
+        <div>
+            <input formControlName="isAllow" type="checkbox"><span>Allow user to specify their own answer</span>
+        </div>
+
+    </div>
+    <div>
+        <input formControlName="isRequired" type="checkbox"><span>This field is required</span>
+    </div>
+</form>
+
+<button (click)="save()">Save</button>
+<button (click)="cancel()">Cancel</button>
